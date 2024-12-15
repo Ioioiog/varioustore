@@ -1,276 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <base href="https://center.com">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VariousStore | Your Ultimate Gaming Hub</title>
-    <style>
-        :root {
-            --primary: #6c63ff;
-            --secondary: #ff6b6b;
-            --dark: #2a2a2a;
-            --light: #ffffff;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-        }
-        body {
-            background: var(--dark);
-            color: var(--light);
-            line-height: 1.6;
-        }
-        .navbar {
-            background: rgba(42, 42, 42, 0.95);
-            padding: 1rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-        .navbar-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-        }
-        .logo span {
-            color: var(--secondary);
-        }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-        .nav-links a {
-            color: var(--light);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: url('https://source.unsplash.com/1600x900/?gaming') no-repeat center center/cover;
-            padding: 0 1rem;
-        }
-        .hero h1 {
-            font-size: 4rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            font-size: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .cta-button {
-            background: var(--primary);
-            color: var(--light);
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
-        }
-        .features {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-        }
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background: var(--dark);
-            width: 90%;
-            max-width: 1200px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 15px;
-            padding: 2rem;
-            position: relative;
-            animation: slideIn 0.3s ease-out;
-        }
-        .modal-content h2 {
-            color: var(--primary);
-            margin-bottom: 2rem;
-        }
-        .modal-content button {
-            background: var(--primary);
-            color: var(--light);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .modal-content button:hover {
-            transform: scale(1.05);
-        }
-        .close-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            color: var(--light);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .nav-links {
-                flex-direction: column;
-                gap: 1rem;
-                margin-top: 1rem;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .hero p {
-                font-size: 1.2rem;
-            }
-            .cta-button {
-                padding: 0.8rem 1.5rem;
-            }
-            .features {
-                padding: 3rem 1rem;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="navbar-content">
-            <a href="#" class="logo">Various<span>Store</span></a>
-            <div class="nav-links">
-                <a href="#" onclick="openModal('gamesModal')">Games</a>
-                <a href="#" onclick="openModal('tournamentsModal')">Tournaments</a>
-                <a href="#" onclick="openModal('shopModal')">Shop</a>
+<html><head><base href="https://varioustore.com"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>GameX | Your Ultimate Gaming Hub</title><style>:root {--primary: #6c63ff; --secondary: #ff6b6b; --dark: #2a2a2a; --light: #ffffff;}* {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;}body {background: var(--dark); color: var(--light); line-height: 1.6;}.navbar {background: rgba(42, 42, 42, 0.95); padding: 1rem 2rem; position: fixed; width: 100%; top: 0; z-index: 1000; backdrop-filter: blur(10px);}.navbar-content {max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;}.logo {font-size: 2rem; font-weight: 700; color: var(--primary); text-decoration: none;}.logo span {color: var(--secondary);}.nav-links {display: flex; gap: 2rem;}.nav-links a {color: var(--light); text-decoration: none; transition: color 0.3s;}.nav-links a:hover {color: var(--primary);}.hero {height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;}.hero-content {text-align: center; z-index: 1; padding: 2rem;}.hero h1 {font-size: 4rem; margin-bottom: 1rem; background: linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}.hero p {font-size: 1.5rem; margin-bottom: 2rem;}.cta-button {background: var(--primary); color: var(--light); padding: 1rem 2rem; border-radius: 30px; text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; display: inline-block;}.cta-button:hover {transform: translateY(-3px); box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);}.features {padding: 5rem 2rem; max-width: 1200px; margin: 0 auto;}.features-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;}.feature-card {background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; transition: transform 0.3s;}.feature-card:hover {transform: translateY(-10px);}.feature-icon {font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;}.shop-modal, .games-modal, .signup-modal, .tournaments-modal {position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s;}.shop-modal.active, .games-modal.active, .signup-modal.active, .tournaments-modal.active {opacity: 1; visibility: visible;}.shop-content, .games-content, .signup-content, .tournaments-content {background: var(--dark); width: 90%; max-width: 1200px; max-height: 90vh; overflow-y: auto; border-radius: 15px; padding: 2rem; position: relative;}.shop-content h2, .games-content h2, .tournaments-content h2 {color: var(--primary); margin-bottom: 2rem;}.shop-grid, .games-grid, .tournaments-list {display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;}.shop-item, .games-item, .tournament-item {background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 10px; text-align: center;}.shop-item img, .games-item img {width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;}.shop-item h3, .games-item h3 {color: var(--light); margin-bottom: 0.5rem;}.shop-item p, .games-item p {color: var(--secondary); font-weight: bold; margin-bottom: 1rem;}.shop-item button, .games-item button, .join-btn {background: var(--primary); color: var(--light); border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; transition: transform 0.2s;}.shop-item button:hover, .games-item button:hover, .join-btn:hover {transform: scale(1.05);}.close-modal {position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--light); font-size: 1.5rem; cursor: pointer;}.signup-form {display: flex; flex-direction: column; gap: 1rem;}.signup-form input {padding: 0.5rem; border-radius: 5px; border: 1px solid var(--primary);}.signup-form button {background: var(--primary); color: var(--light); border: none; padding: 0.5rem; border-radius: 5px; cursor: pointer;}.tournaments-modal {position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s;}.tournaments-content {background: var(--dark); width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; border-radius: 15px; padding: 2rem; position: relative;}.tournaments-list {display: flex; flex-direction: column; gap: 1.5rem;}.tournament-item {display: flex; align-items: center; background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 10px; gap: 2rem;}.tournament-date {display: flex; flex-direction: column; align-items: center; min-width: 80px; padding: 1rem; background: var(--primary); border-radius: 8px;}.tournament-date .day {font-size: 1.5rem; font-weight: bold;}.tournament-date .month {font-size: 0.9rem;}.tournament-info {flex-grow: 1;}.tournament-info h3 {color: var(--light); margin-bottom: 0.5rem;}.tournament-info p {color: var(--secondary); margin-bottom: 0.5rem;}.participants {font-size: 0.9rem; color: #888;}.join-btn {background: var(--primary); color: var(--light); border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer; transition: transform 0.2s;}.join-btn:hover {transform: scale(1.05);}.tournament-game-icon {font-size: 2rem; color: var(--primary);}.tournament-meta {display: flex; gap: 1rem; margin: 0.5rem 0; color: #888;}.tournament-tags {display: flex; gap: 0.5rem; margin-top: 0.5rem;}.tag {background: rgba(108, 99, 255, 0.2); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 15px; font-size: 0.8rem;}.tournaments-filters {display: flex; gap: 1rem; margin-bottom: 2rem;}.tournaments-filters select {padding: 0.5rem 1rem; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--primary); color: var(--light); border-radius: 5px; cursor: pointer;}.shop-controls {display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;}.shop-filter, .shop-sort {padding: 0.5rem 1rem; border: 1px solid var(--primary); background: rgba(255, 255, 255, 0.05); color: var(--light); border-radius: 5px; cursor: pointer; min-width: 150px;}.shop-item {position: relative; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;}.shop-item:hover {transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.3);}.discount-badge {position: absolute; top: 10px; right: 10px; background: var(--secondary); color: var(--light); padding: 0.3rem 0.8rem; border-radius: 15px; font-weight: bold;}.item-details {padding: 1rem;}.price-container {display: flex; gap: 1rem; align-items: center; margin: 0.5rem 0;}.original-price {color: #888; text-decoration: line-through; font-size: 0.9rem;}.sale-price {color: var(--secondary); font-size: 1.2rem; font-weight: bold;}.item-meta {display: flex; justify-content: space-between; align-items: center; margin: 0.5rem 0;}.category {background: rgba(108, 99, 255, 0.2); color: var(--primary); padding: 0.2rem 0.8rem; border-radius: 15px; font-size: 0.8rem;}.rating {color: #ffd700;}.add-to-cart-btn {width: 100%; padding: 0.8rem; background: var(--primary); color: var(--light); border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: transform 0.2s;}.add-to-cart-btn:hover {transform: scale(1.05);}@media (max-width: 768px) {.navbar-content {flex-direction: column; gap: 1rem; padding: 1rem 0;}.nav-links {flex-direction: column; align-items: center; width: 100%; gap: 1rem;}.logo {font-size: 1.5rem;}.hero h1 {font-size: 2.5rem;}.hero p {font-size: 1.2rem;}.shop-content, .games-content, .signup-content, .tournaments-content {width: 95%; padding: 1rem;}.shop-grid, .games-grid {grid-template-columns: 1fr;}.tournament-item {flex-direction: column; text-align: center; gap: 1rem;}.tournament-date {margin: 0 auto;}.tournament-info {text-align: center;}.join-btn {width: 100%;}.social-btn {font-size: 0.9rem;}.form-group input {padding: 0.8rem 2.5rem; font-size: 0.9rem;}.shop-modal,.games-modal,.signup-modal,.tournaments-modal {overflow-y: auto; -webkit-overflow-scrolling: touch;}.signup-form {gap: 1.2rem;}.checkbox-container {font-size: 0.85rem;}.login-text {font-size: 0.9rem;}} </style><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"></head><body><nav class="navbar"><div class="navbar-content"><a href="https://varioustore.com" class="logo">Various<span>Store</span></a><div class="nav-links"><a href="javascript:void(0)" onclick="openGamesModal()">Games</a><a href="javascript:void(0)" onclick="openTournamentsModal()">Tournaments</a><a href="javascript:void(0)" onclick="openShopModal()" class="nav-link">Shop</a></div></div></nav><section class="hero"><div class="floating-graphics"><svg class="floating-graphic" style="top: 20%; left: 10%" width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="var(--primary)" stroke-width="2"></circle><path d="M15 25h20M25 15v20" stroke="var(--primary)" stroke-width="2"></path></svg><svg class="floating-graphic" style="top: 60%; right: 15%" width="50" height="50" viewBox="0 0 50 50"><polygon points="25,5 45,40 5,40" fill="none" stroke="var(--secondary)" stroke-width="2"></polygon></svg></div><div class="hero-content"><h1>Level Up Your Gaming Experience</h1><p>Join the ultimate gaming community where passion meets competition</p><a href="javascript:void(0)" onclick="openSignupModal()" class="cta-button">Get Started</a></div></section><section class="features"><div class="features-grid"><div class="feature-card"><i class="fas fa-gamepad feature-icon"></i><h3>Instant Gaming</h3><p>Access hundreds of games instantly, no downloads required. Play anywhere, anytime.</p></div><div class="feature-card"><i class="fas fa-trophy feature-icon"></i><h3>Competitive Tournaments</h3><p>Compete in daily tournaments and win exciting prizes. Show off your skills!</p></div><div class="feature-card"><i class="fas fa-users feature-icon"></i><h3>Vibrant Community</h3><p>Connect with fellow gamers, share strategies, and make lasting friendships.</p></div></div></section><div class="shop-modal" id="shopModal"><div class="shop-content">
+    <button class="close-modal" onclick="closeShopModal()">×</button>
+    <h2>Gaming Store</h2>
+    <div class="shop-controls">
+        <select class="shop-filter" onchange="filterShopItems(this.value)">
+            <option value="all">All Categories</option>
+            <option value="games">Games</option>
+            <option value="accessories">Accessories</option>
+            <option value="merchandise">Merchandise</option>
+        </select>
+        <select class="shop-sort" onchange="sortShopItems(this.value)">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name A-Z</option>
+        </select>
+    </div>
+    <div class="shop-grid">
+        <div class="shop-item">
+            <div class="discount-badge">-20%</div>
+            <img src="https://picsum.photos/300/200" alt="Assassin's Creed Odyssey">
+            <div class="item-details">
+                <h3>Assassin's Creed Odyssey</h3>
+                <div class="price-container">
+                    <span class="original-price">$59.99</span>
+                    <span class="sale-price">$47.99</span>
+                </div>
+                <div class="item-meta">
+                    <span class="category">Action RPG</span>
+                    <span class="rating">★★★★½</span>
+                </div>
+                <button onclick="addToCart(1)" class="add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i>Add to Cart
+                </button>
             </div>
         </div>
-    </nav>
 
-    <section class="hero">
-        <div>
-            <h1>Level Up Your Gaming Experience</h1>
-            <p>Join the ultimate gaming community where passion meets competition.</p>
-            <a href="#" class="cta-button" onclick="openModal('signupModal')">Get Started</a>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="features-grid">
-            <div class="feature-card">
-                <i class="fas fa-gamepad feature-icon"></i>
-                <h3>Instant Gaming</h3>
-                <p>Access hundreds of games instantly, no downloads required.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-trophy feature-icon"></i>
-                <h3>Competitive Tournaments</h3>
-                <p>Compete in daily tournaments and win exciting prizes.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-users feature-icon"></i>
-                <h3>Vibrant Community</h3>
-                <p>Connect with fellow gamers, share strategies, and make friends.</p>
+        <div class="shop-item">
+            <div class="discount-badge">-15%</div>
+            <img src="https://picsum.photos/301/200" alt="The Witcher 3">
+            <div class="item-details">
+                <h3>The Witcher 3: Wild Hunt</h3>
+                <div class="price-container">
+                    <span class="original-price">$49.99</span>
+                    <span class="sale-price">$42.49</span>
+                </div>
+                <div class="item-meta">
+                    <span class="category">RPG</span>
+                    <span class="rating">★★★★★</span>
+                </div>
+                <button onclick="addToCart(2)" class="add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i>Add to Cart
+                </button>
             </div>
         </div>
-    </section>
 
-    <!-- Modals -->
-    <div class="modal" id="shopModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('shopModal')">&times;</button>
-            <h2>Shop</h2>
-            <p>Shop content goes here.</p>
+        <div class="shop-item">
+            <div class="discount-badge">-25%</div>
+            <img src="https://picsum.photos/302/200" alt="God of War">
+            <div class="item-details">
+                <h3>God of War</h3>
+                <div class="price-container">
+                    <span class="original-price">$59.99</span>
+                    <span class="sale-price">$44.99</span>
+                </div>
+                <div class="item-meta">
+                    <span class="category">Action Adventure</span>
+                    <span class="rating">★★★★★</span>
+                </div>
+                <button onclick="addToCart(3)" class="add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i>Add to Cart
+                </button>
+            </div>
+        </div>
+
+        <div class="shop-item">
+            <img src="https://picsum.photos/303/200" alt="Elden Ring">
+            <div class="item-details">
+                <h3>Elden Ring</h3>
+                <div class="price-container">
+                    <span class="sale-price">$59.99</span>
+                </div>
+                <div class="item-meta">
+                    <span class="category">Action RPG</span>
+                    <span class="rating">★★★★★</span>
+                </div>
+                <button onclick="addToCart(4)" class="add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i>Add to Cart
+                </button>
+            </div>
+        </div>
+
+        <div class="shop-item">
+            <div class="discount-badge">-30%</div>
+            <img src="https://picsum.photos/304/200" alt="Horizon Zero Dawn">
+            <div class="item-details">
+                <h3>Horizon Zero Dawn</h3>
+                <div class="price-container">
+                    <span class="original-price">$49.99</span>
+                    <span class="sale-price">$34.99</span>
+                </div>
+                <div class="item-meta">
+                    <span class="category">Action RPG</span>
+                    <span class="rating">★★★★½</span>
+                </div>
+                <button onclick="addToCart(5)" class="add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i>Add to Cart
+                </button>
+            </div>
+        </div>
+
+        <div class="shop-item">
+            <img src="https://picsum.photos/305/200" alt="Final Fantasy XVI">
+            <div class="item-details">
+                <h3>Final Fantasy XVI</h3>
+                <div class="price-container">
+                    <span class="sale-price">$69.99</span>
+                </div>
+                <div class="item-meta">
+                    <span class="category">JRPG</span>
+                    <span class="rating">★★★★★</span>
+                </div>
+                <button onclick="addToCart(6)" class="add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i>Add to Cart
+                </button>
+            </div>
         </div>
     </div>
-    <!-- Add more modal sections as needed -->
-
-    <script>
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
-        }
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-        }
-    </script>
-</body>
-</html>
+</div></div><div class="games-modal" id="gamesModal"><div class="games-content"><button class="close-modal" onclick="closeGamesModal()">×</button><h2>Featured Games</h2><div class="games-grid"><div class="games-item"><img src="https://picsum.photos/304/200" alt="Game 1"><h3>Assassin's Creed Odyssey</h3><p>$59.99</p><button onclick="buyGame(1)">Buy Now</button></div><div class="games-item"><img src="https://picsum.photos/305/200" alt="Game 2"><h3>Call of Duty: Modern Warfare</h3><p>$69.99</p><button onclick="buyGame(2)">Buy Now</button></div><div class="games-item"><img src="https://picsum.photos/306/200" alt="Game 3"><h3>Cyberpunk 2077</h3><p>$49.99</p><button onclick="buyGame(3)">Buy Now</button></div><div class="games-item"><img src="https://picsum.photos/307/200" alt="Game 4"><h3>Red Dead Redemption 2</h3><p>$39.99</p><button onclick="buyGame(4)">Buy Now</button></div></div></div></div><div class="signup-modal" id="signupModal"><div class="signup-content"><button class="close-modal" onclick="closeSignupModal()">×</button><h2>Join the Gaming Revolution</h2><div class="social-login"><button onclick="socialLogin('google')" class="social-btn google"><i class="fab fa-google"></i> Continue with Google</button><button onclick="socialLogin('discord')" class="social-btn discord"><i class="fab fa-discord"></i> Continue with Discord</button><div class="divider"><span>or</span></div></div><div class="signup-form"><div class="form-group"><i class="fas fa-user"></i><input type="text" placeholder="Username" required=""></div><div class="form-group"><i class="fas fa-envelope"></i><input type="email" placeholder="Email" required=""></div><div class="form-group"><i class="fas fa-lock"></i><input type="password" placeholder="Password" required=""><i class="fas fa-eye toggle-password"></i></div><div class="form-group"><label class="checkbox-container"><input type="checkbox" required=""><span class="checkmark"></span>I agree to the <a href="https://varioustore.com/terms">Terms of Service</a></label></div><button onclick="handleSignup()" class="signup-btn">Create Account</button><p class="login-text">Already have an account? <a href="javascript:void(0)" onclick="toggleLoginForm()">Log In</a></p></div><style>.signup-content {background: linear-gradient(145deg, #2a2a2a, #353535);padding: 2.5rem;border-radius: 20px;box-shadow: 0 10px 30px rgba(0,0,0,0.3);max-width: 500px;width: 90%;}.signup-content h2 {text-align: center;color: var(--primary);margin-bottom: 2rem;font-size: 2rem;}.social-login {display: flex;flex-direction: column;gap: 1rem;margin-bottom: 2rem;}.social-btn {display: flex;align-items: center;justify-content: center;gap: 1rem;padding: 0.8rem;border:none;border-radius: 8px;font-size: 1rem;cursor: pointer;transition: transform 0.2s, box-shadow 0.2s;}.social-btn:hover {transform: translateY(-2px);box-shadow: 0 5px 15px rgba(0,0,0,0.2);}.google {background: #fff;color: #333;}.discord {background: #7289da;color: white;}.divider {text-align: center;position: relative;margin: 1.5rem 0;}.divider::before,.divider::after {content: '';position: absolute;top: 50%;width: 45%;height: 1px;background: rgba(255,255,255,0.1);}.divider::before {left: 0;}.divider::after {right: 0;}.divider span {background: #2a2a2a;padding: 0 1rem;color: #888;}.form-group {position: relative;margin-bottom: 1.5rem;}.form-group i {position: absolute;left: 1rem;top: 50%;transform: translateY(-50%);color: #888;}.toggle-password {right: 1rem;left: auto;cursor: pointer;}.form-group input {width: 100%;padding: 1rem 3rem;border: 1px solid rgba(255,255,255,0.1);border-radius: 8px;background: rgba(255,255,255,0.05);color: white;font-size: 1rem;}.form-group input:focus {outline: none;border-color: var(--primary);}.checkbox-container {display: flex;align-items: center;gap: 0.5rem;color: #888;font-size: 0.9rem;}.checkbox-container a {color: var(--primary);text-decoration: none;}.signup-btn {width: 100%;padding: 1rem;background: var(--primary);color: white;border:none;border-radius: 8px;font-size: 1rem;cursor: pointer;transition: transform 0.2s, box-shadow 0.2s;}.signup-btn:hover {transform: translateY(-2px);box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);}.login-text {text-align: center;margin-top: 1rem;color: #888;}.login-text a {color: var(--primary);text-decoration: none;}</style></div></div><div class="tournaments-modal" id="tournamentsModal"><div class="tournaments-content"><button class="close-modal" onclick="closeTournamentsModal()">×</button><h2>Upcoming Tournaments</h2><div class="tournaments-filters"><select onchange="filterTournaments(this.value)"><option value="all">All Games</option><option value="cod">Call of Duty</option><option value="lol">League of Legends</option><option value="fortnite">Fortnite</option></select><select onchange="sortTournaments(this.value)"><option value="date">Sort by Date</option><option value="prize">Sort by Prize Pool</option></select></div><div class="tournaments-list"><div class="tournament-item"><div class="tournament-date"><span class="day">15</span><span class="month">DEC</span></div><div class="tournament-info"><div class="tournament-game-icon"><i class="fas fa-gamepad"></i></div><div class="tournament-details"><h3>Call of Duty Championship</h3><p class="prize-pool"><i class="fas fa-trophy"></i> Prize Pool: $10,000</p><div class="tournament-meta"><span class="participants"><i class="fas fa-users"></i> 32/32 Teams</span><span class="skill-level"><i class="fas fa-star"></i> Professional</span></div><div class="tournament-tags"><span class="tag">5v5</span><span class="tag">Battle Royale</span></div></div></div><button class="join-btn">Join Tournament</button></div></div></div></div><script>document.addEventListener('DOMContentLoaded', () => {const graphics = document.querySelectorAll('.floating-graphic');graphics.forEach(graphic => {graphic.style.animationDelay = `${Math.random() * 2}s`;});});function openShopModal() {document.getElementById('shopModal').style.opacity = '1';document.getElementById('shopModal').style.visibility = 'visible';}function closeShopModal() {document.getElementById('shopModal').style.opacity = '0';document.getElementById('shopModal').style.visibility = 'hidden';}function openGamesModal() {document.getElementById('gamesModal').style.opacity = '1';document.getElementById('gamesModal').style.visibility = 'visible';}function closeGamesModal() {document.getElementById('gamesModal').style.opacity = '0';document.getElementById('gamesModal').style.visibility = 'hidden';}function openTournamentsModal() {document.getElementById('tournamentsModal').style.opacity = '1';document.getElementById('tournamentsModal').style.visibility = 'visible';}function closeTournamentsModal() {document.getElementById('tournamentsModal').style.opacity = '0';document.getElementById('tournamentsModal').style.visibility = 'hidden';}function openSignupModal() {document.getElementById('signupModal').style.opacity = '1';document.getElementById('signupModal').style.visibility = 'visible';}function closeSignupModal() {document.getElementById('signupModal').style.opacity = '0';document.getElementById('signupModal').style.visibility = 'hidden';}function handleSignup() {alert('Sign up functionality will be implemented here');}function handleLogin() {alert('Login functionality will be implemented here');}function addToCart(itemId) {alert('Item added to cart!');}function buyGame(gameId) {alert('Game purchase initiated!');}function filterTournaments(game) {console.log('Filtering tournaments by:', game);}function sortTournaments(criteria) {console.log('Sorting tournaments by:', criteria);}function filterShopItems(category) {console.log('Filtering shop items by:', category);}function sortShopItems(criteria) {console.log('Sorting shop items by:', criteria);}document.getElementById('shopModal').addEventListener('click', (e) => {if (e.target === document.getElementById('shopModal')) {closeShopModal();}});document.getElementById('gamesModal').addEventListener('click', (e) => {if (e.target === document.getElementById('gamesModal')) {closeGamesModal();}});document.getElementById('signupModal').addEventListener('click', (e) => {if (e.target === document.getElementById('signupModal')) {closeSignupModal();}});document.getElementById('tournamentsModal').addEventListener('click', (e) => {if (e.target === document.getElementById('tournamentsModal')) {closeTournamentsModal();}});const modals = ['shopModal','gamesModal','signupModal','tournamentsModal'];modals.forEach(modalId => {const modal = document.getElementById(modalId);if (modal) {modal.addEventListener('touchstart', handleTouchStart);modal.addEventListener('touchmove', handleTouchMove);}});let touchStartY = 0;function handleTouchStart(e) {touchStartY = e.touches[0].clientY;}function handleTouchMove(e) {const touchY = e.touches[0].clientY;const modal = e.currentTarget;const modalContent = modal.querySelector('.shop-content, .games-content, .signup-content, .tournaments-content');if (modalContent.scrollTop === 0 && touchY > touchStartY) {e.preventDefault();}if (modalContent.scrollHeight - modalContent.scrollTop === modalContent.clientHeight && touchY < touchStartY) {e.preventDefault();}}if (!document.querySelector('meta[name="viewport"]')) {const meta = document.createElement('meta');meta.name = 'viewport';meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';document.head.appendChild(meta);}</script></body></html>
